@@ -45,6 +45,7 @@ CORS_ALLOWED_ORIGINS = cors_allowed_origins
 # Application definition
 
 INSTALLED_APPS = [
+    'jazzmin',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
