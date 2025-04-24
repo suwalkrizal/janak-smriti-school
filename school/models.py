@@ -19,14 +19,6 @@ class AboutUs(models.Model):
     title = models.CharField(max_length=225)
     content = RichTextField()
     images = models.ManyToManyField(AboutUsImage, related_name='about_us')
-    # def clean(self):
-    #     """Ensure no more than 10 images are attached."""
-    #     if self.images.count() > 10:
-    #         raise ValidationError("You can only upload up to 10 images.")
-
-    # def save(self, *args, **kwargs):
-    #     self.clean()  # Run validation before saving
-    #     super().save(*args, **kwargs)
         
     def __str__(self):
         return self.title
