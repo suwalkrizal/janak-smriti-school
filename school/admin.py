@@ -1,28 +1,10 @@
 from django.contrib import admin
 from .models import *
-from django.contrib.auth.models import User
-class CustomUserAdmin(admin.ModelAdmin):
-    list_display = ("username", "email", "is_staff", "is_superuser")
-    
-    def get_queryset(self, request):
-        queryset = super().get_queryset(request)
-
-        # If the logged-in user is NOT a superuser, hide superusers
-        if not request.user.is_superuser:
-            queryset = queryset.filter(is_superuser=False)
-        return queryset
-
-admin.site.unregister(User)  # Unregister default UserAdmin
-admin.site.register(User, CustomUserAdmin)
 
 @admin.register(Banner)
 class BannerAdmin(admin.ModelAdmin):
     list_display = ('id', 'image')  
     search_fields = ('id',)  
-
-
-
-# admin.site.register(AboutUs, AboutUsAdminImage)
 
 @admin.register(AboutUs)
 class AboutUsAdmin(admin.ModelAdmin):

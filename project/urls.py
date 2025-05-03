@@ -28,11 +28,15 @@ def redirect_to_admin(request):
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('',include('school.urls')),
+    path('user/',include('users.urls')),
     re_path(r'^$', redirect_to_admin),
     
     path('api/schema/', SpectacularAPIView.as_view(), name='schema'),
     path('api/swagger/', SpectacularSwaggerView.as_view(url_name='schema'), name='swagger-ui'),
     path('api/schema/redoc/', SpectacularRedocView.as_view(url_name='schema'), name='redoc'),
+    
+    path('auth/', include('djoser.urls')),
+    path("auth/", include("djoser.urls.authtoken")),
 
 ]
 

@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 from pathlib import Path
 from dotenv import load_dotenv
 import os
+# import json
 
 load_dotenv()
 
@@ -27,19 +28,19 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = secret_key
+SECRET_KEY = os.getenv('SECRET_KEY', 123)
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG_CHECK = debug_check
-
-if DEBUG_CHECK == 'True':
-    DEBUG = True
-else:
-    DEBUG = False
+DEBUG = os.getenv('DEBUG')
     
-ALLOWED_HOSTS = allowed_hosts
-CSRF_TRUSTED_ORIGINS = csrf_trusted_origins
-CORS_ALLOWED_ORIGINS = cors_allowed_origins
+# ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', 'localhost').split(',')
+
+# Get comma-separated string from environment variables
+# csrf_origins = os.getenv('CSRF_TRUSTED_ORIGINS', '')
+# cors_origins = os.getenv('CORS_ALLOWED_ORIGINS', '')
+
+# CSRF_TRUSTED_ORIGINS = [origin.strip() for origin in csrf_origins.split(',') if origin]
+# CORS_ALLOWED_ORIGINS = [origin.strip() for origin in cors_origins.split(',') if origin]
 
 
 # Application definition
@@ -53,9 +54,12 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'school',
+    'users',
     
     'rest_framework',
+    'rest_framework.authtoken',
     'django_filters',
+    'djoser',
     
     'drf_spectacular',
     'ckeditor',
@@ -73,6 +77,10 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'project.urls'
+
+AUTH_USER_MODEL = 'users.User' 
+
+
 
 TEMPLATES = [
     {
@@ -139,21 +147,38 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
 STATIC_URL = 'static/'
-STATIC_ROOT = static_root
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+EMAIL_BACKEND = os.getenv('EMAIL_BACKEND')
+EMAIL_HOST = os.getenv('EMAIL_HOST')
+EMAIL_PORT = int(os.getenv('EMAIL_PORT', 587))
+EMAIL_USE_TLS = os.getenv('EMAIL_USE_TLS', 'True') == 'True'
+EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
+
+
 REST_FRAMEWORK = {
-    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
-    'PAGE_SIZE' :10,
     'DEFAULT_AUTHENTICATION_CLASSES': [
-        'rest_framework.authentication.BasicAuthentication',
         'rest_framework.authentication.TokenAuthentication',
     ],
     'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
+}
+
+DJOSER = {
+    "LOGIN_FIELD": "email",
+    "USER_CREATE_PASSWORD_RETYPE": True,
+    "USER_LOGIN_USERNAME_PASSWORD": True,
+    "SEND_ACTIVATION_EMAIL": False,
+    "SERIALIZERS": {
+        "user_create": "users.serializers.CustomUserCreateSerializer",
+        "user": "users.serializers.CustomUserCreateSerializer",
+        "current_user": "users.serializers.CustomUserCreateSerializer",
+    },
 }
 
 SPECTACULAR_SETTINGS = {
