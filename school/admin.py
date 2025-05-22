@@ -33,20 +33,20 @@ class BlogContentAdmin(admin.ModelAdmin):
     
 @admin.register(StudentDetail)
 class StudentDetailAdmin(admin.ModelAdmin):
-    list_display = ('name', 'student_id', 'student_class', 'age')
+    list_display = ('name', 'student_id', 'student_class', 'age', 'address', 'image')
     list_filter = ('student_class',)
     search_fields = ('name', 'student_id')
 
 
 @admin.register(TeacherDetail)
 class TeacherDetailAdmin(admin.ModelAdmin):
-    list_display = ('name', 'subject', 'email', 'phone')
+    list_display = ('name', 'subject', 'teacher_id', 'email', 'phone', 'image')
     search_fields = ('name', 'subject', 'email')
 
 
 @admin.register(StaffDetail)
 class StaffDetailAdmin(admin.ModelAdmin):
-    list_display = ('name', 'position', 'phone')
+    list_display = ('name', 'position', 'staff_id', 'phone', 'image')
     search_fields = ('name', 'position')
 
 @admin.register(ContactUs)

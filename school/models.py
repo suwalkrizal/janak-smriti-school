@@ -80,6 +80,7 @@ class StudentDetail(models.Model):
 class TeacherDetail(models.Model):
     name = models.CharField(max_length=100)
     subject = models.CharField(max_length=100)
+    teacher_id = models.CharField(max_length=50, unique=True)
     phone = models.CharField(max_length=20, blank=True, null=True)
     email = models.EmailField(blank=True, null=True)
     image = models.ImageField(upload_to='teachers/', blank=True, null=True)
@@ -91,6 +92,7 @@ class TeacherDetail(models.Model):
 class StaffDetail(models.Model):
     name = models.CharField(max_length=100)
     position = models.CharField(max_length=100)  # e.g., Accountant, Janitor, Librarian
+    staff_id = models.CharField(max_length=50, unique=True)
     phone = models.CharField(max_length=20, blank=True, null=True)
     image = models.ImageField(upload_to='staff/', blank=True, null=True)
 
