@@ -30,6 +30,24 @@ class BlogContentAdmin(admin.ModelAdmin):
     list_display = ('blog', 'sub_content_title')
     search_fields = ('sub_content_title', 'blog__title')
     list_filter = ('blog',)
+    
+@admin.register(StudentDetail)
+class StudentDetailAdmin(admin.ModelAdmin):
+    list_display = ('name', 'student_id', 'student_class', 'age')
+    list_filter = ('student_class',)
+    search_fields = ('name', 'student_id')
+
+
+@admin.register(TeacherDetail)
+class TeacherDetailAdmin(admin.ModelAdmin):
+    list_display = ('name', 'subject', 'email', 'phone')
+    search_fields = ('name', 'subject', 'email')
+
+
+@admin.register(StaffDetail)
+class StaffDetailAdmin(admin.ModelAdmin):
+    list_display = ('name', 'position', 'phone')
+    search_fields = ('name', 'position')
 
 @admin.register(ContactUs)
 class ContactUsAdmin(admin.ModelAdmin):

@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from rest_framework import viewsets, status
+from rest_framework import viewsets, permissions, status
 from rest_framework.response import Response
 
 from rest_framework.pagination import PageNumberPagination
@@ -10,6 +10,7 @@ import threading
 from .models import *
 from .serializers import *
 from rest_framework.viewsets import ReadOnlyModelViewSet
+from rest_framework.permissions import DjangoModelPermissions
 
 # Pagination class
 class CustomPagination(PageNumberPagination):
@@ -60,6 +61,28 @@ class BlogContentViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = BlogContent.objects.all()
     serializer_class = BlogContentSerializer
     pagination_class = CustomPagination
+
+class StudentDetailViewSet(viewsets.ModelViewSet):
+    queryset = StudentDetail.objects.all()
+    serializer_class = StudentDetailSerializer
+    pagination_class = CustomPagination
+    http_method_names = ['get', 'post']
+    permission_classes = [DjangoModelPermissions]
+
+
+
+class TeacherDetailViewSet(viewsets.ModelViewSet):
+    queryset = TeacherDetail.objects.all()
+    serializer_class = TeacherDetailSerializer
+    pagination_class = CustomPagination
+    permission_classes = [DjangoModelPermissions]
+
+
+class StaffDetailViewSet(viewsets.ModelViewSet):
+    queryset = StaffDetail.objects.all()
+    serializer_class = StaffDetailSerializer
+    pagination_class = CustomPagination
+    permission_classes = [DjangoModelPermissions]
 
 class ContactUsViewSet(viewsets.ModelViewSet):
     queryset = ContactUs.objects.all()

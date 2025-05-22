@@ -49,6 +49,54 @@ class BlogContent(models.Model):
     def __str__(self):
         return f"{self.blog.title} - {self.sub_content_title}"
 
+
+class StudentDetail(models.Model):
+    CLASS_CHOICES = [
+        ('Nursery', 'Nursery'),
+        ('LKG', 'LKG'),
+        ('UKG', 'UKG'),
+        ('1', 'Class 1'),
+        ('2', 'Class 2'),
+        ('3', 'Class 3'),
+        ('4', 'Class 4'),
+        ('5', 'Class 5'),
+        ('6', 'Class 6'),
+        ('7', 'Class 7'),
+        ('8', 'Class 8'),
+        ('9', 'Class 9'),
+        ('10', 'Class 10'),
+    ]
+
+    name = models.CharField(max_length=100)
+    student_id = models.CharField(max_length=50, unique=True)
+    student_class = models.CharField(max_length=20, choices=CLASS_CHOICES)
+    age = models.IntegerField()
+    address = models.CharField(blank=True, null=True)
+    image = models.ImageField(upload_to='students/', blank=True, null=True)
+
+    def __str__(self):
+        return f"{self.name} ({self.get_student_class_display()})"
+
+class TeacherDetail(models.Model):
+    name = models.CharField(max_length=100)
+    subject = models.CharField(max_length=100)
+    phone = models.CharField(max_length=20, blank=True, null=True)
+    email = models.EmailField(blank=True, null=True)
+    image = models.ImageField(upload_to='teachers/', blank=True, null=True)
+
+    def __str__(self):
+        return f"{self.name} - {self.subject}"
+
+
+class StaffDetail(models.Model):
+    name = models.CharField(max_length=100)
+    position = models.CharField(max_length=100)  # e.g., Accountant, Janitor, Librarian
+    phone = models.CharField(max_length=20, blank=True, null=True)
+    image = models.ImageField(upload_to='staff/', blank=True, null=True)
+
+    def __str__(self):
+        return f"{self.name} - {self.position}"
+    
 # Contact Model
 class ContactUs(models.Model):
     name = models.CharField(max_length=225)

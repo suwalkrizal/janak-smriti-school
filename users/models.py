@@ -1,5 +1,5 @@
 from django.db import models
-from django.contrib.auth.models import User, AbstractUser, BaseUserManager, Permission
+from django.contrib.auth.models import User, Group, AbstractUser, BaseUserManager
 from school.validators import *
 
 class UserManager(BaseUserManager):
@@ -34,6 +34,7 @@ class User(AbstractUser):
     )
     email = models.EmailField(unique=True)
     location = models.CharField(max_length=255)
+    role = models.ForeignKey(Group, related_name="user_role", null=True, on_delete=models.PROTECT)
     
    
     USERNAME_FIELD = "email"

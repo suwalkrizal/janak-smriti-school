@@ -31,6 +31,23 @@ class AboutUsSerializer(serializers.ModelSerializer):
         images = obj.images.all()[:10]  # Limit to 10 images
         return AboutUsImageSerializer(images, many=True).data
 
+class StudentDetailSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = StudentDetail
+        fields = '__all__'
+
+
+class TeacherDetailSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = TeacherDetail
+        fields = '__all__'
+
+
+class StaffDetailSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = StaffDetail
+        fields = '__all__'
+        
 class BlogContentSerializer(serializers.ModelSerializer):
     class Meta:
         model = BlogContent
